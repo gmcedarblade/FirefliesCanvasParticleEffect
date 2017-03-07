@@ -45,6 +45,9 @@ function init() {
     }
     
     
+    
+    
+    
 }
 
 //
@@ -53,6 +56,28 @@ function init() {
 
 function FireFly(topEdge, bottomEdge, leftEdge, rightEdge, xVel, yVel) {
     
+    // save the passed-in parameter values in properties
+    // of our object for later access.
+    this.top = topEdge;
+    this.bottom = bottomEdge;
+    this.left = leftEdge;
+    this.right = rightEdge;
+    this.xVelocity = xVel;
+    this.xVelocity = yVel;
+    
+    // initialposition of this FireFly object
+    this.x = Math.random() * canvas.width/2;
+    this.y = Math.random() * canvas.height;
+    
+    this.alpha = randRange(.2, .9);
+    this.color = 'rgba(153, 255, 51, ' + this.alpha + ')';
+    
+    this.radius = randRange(2.5, 4.5);
+    
+    this.blink = true;
+    
+    this.maxBlinkRate = 15;
+    this.blinkRate = Math.floor(randRange(0, this.maxBlinkRate));
     
 }
 

@@ -45,7 +45,11 @@ function init() {
     }
     
     
+    // Get the firefly animation started using a timer to 
+    // kick off our heartbeat (loop). Have it run repeatedly
+    // framerate times per second until the user leaves the page
     
+    requestAnimationFrame(update);
     
     
 }
@@ -84,5 +88,45 @@ function FireFly(topEdge, bottomEdge, leftEdge, rightEdge, xVel, yVel) {
 function randRange(min, max) {
     
     return Math.random() * (max - min) + min;
+    
+}
+
+//
+// Heartbeat function (animation loop)
+// Draw and animate the FireFly particle objects on our canvas..
+//
+function update() {
+    
+    // Use a hack using setTimeout() to reset the framerate
+    setTimeout(function() {
+        
+        // Clear the canvas so it can be refreshed (redrawn)
+        
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        
+        // Let's draw the FireFly particles that are in our
+        // fireFlies array on the canvas.
+        fireFlies.forEach(function(fly, index) {
+            
+            ctx.beginPath();
+            
+            ctx.fillStyle = fly.color;
+            
+            // If the firefly is visible, draw it
+            if (fly.blink) {
+                
+                ctx.arc(fly.x, fly.y, fly.radius, 0, Math.PI*2, false);
+                
+                ctx.fill();
+                
+            }
+            
+            ctx.closePath()
+            
+        });
+        
+        requestAnimationFrame(update);
+        
+    }, 1000/fps);
     
 }

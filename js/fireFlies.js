@@ -78,7 +78,7 @@ function FireFly(topEdge, bottomEdge, leftEdge, rightEdge, xVel, yVel) {
     
     this.radius = randRange(.5, 1.5);
     
-    this.blink = true;
+    this.blink = false;
     
     this.maxBlinkRate = 15;
     this.blinkRate = Math.floor(randRange(0, this.maxBlinkRate));
@@ -111,6 +111,25 @@ function update() {
             ctx.beginPath();
             
             ctx.fillStyle = fly.color;
+            
+            // Based on the blinkRate property reset the
+            // blink property.
+            
+            if (fly.blinkRate >= fly.maxBlinkRate) {
+                
+                fly.blinkRate = 0;
+                fly.blink = false;
+                
+            } else {
+                
+                fly.blinkRate++;
+                
+                if (fly.blinkRate >= 7) {
+                    
+                    fly.blink = true;
+                }
+                
+            }
             
             // If the firefly is visible, draw it
             if (fly.blink) {

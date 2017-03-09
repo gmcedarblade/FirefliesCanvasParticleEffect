@@ -129,8 +129,27 @@ function update() {
             // x and y properties (positions)
             //
             
-            fly.x += fly.xVelocity;
-            fly.y += fly.yVelocity;
+            fly.x += fly.xVelocity + Math.cos(angleX) * range;
+            fly.y += fly.yVelocity + Math.sin(angleY) * range;
+            
+            // Alter the angle values
+            angleX += xSpeed;
+            angleY += ySpeed;
+            
+            // Collision detcction at our boundaries
+            //
+            // Check bottom edge
+            if (fly.y >= fly.bottom + 25 && fly.yVelocity > 0) {
+                
+                fly.y = fly.bottom + 5;
+                fly.yVelocity *= -1; // reverse direction
+                
+            } else if (fly.y <= fly.top - 25 && fly.yVelocity < 0) { // top edge
+                
+                fly.y = 5;
+                fly.yVelocity *= -1;
+                
+            }
             
         });
         

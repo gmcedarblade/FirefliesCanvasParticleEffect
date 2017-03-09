@@ -67,7 +67,7 @@ function FireFly(topEdge, bottomEdge, leftEdge, rightEdge, xVel, yVel) {
     this.left = leftEdge;
     this.right = rightEdge;
     this.xVelocity = xVel;
-    this.xVelocity = yVel;
+    this.yVelocity = yVel;
     
     // initialposition of this FireFly object
     this.x = Math.random() * canvas.width/2;
@@ -76,9 +76,9 @@ function FireFly(topEdge, bottomEdge, leftEdge, rightEdge, xVel, yVel) {
     this.alpha = randRange(.2, .9);
     this.color = 'rgba(153, 255, 51, ' + this.alpha + ')';
     
-    this.radius = randRange(2.5, 4.5);
+    this.radius = randRange(.5, 1.5);
     
-    this.blink = true;
+    this.blink = false;
     
     this.maxBlinkRate = 15;
     this.blinkRate = Math.floor(randRange(0, this.maxBlinkRate));
@@ -112,6 +112,25 @@ function update() {
             
             ctx.fillStyle = fly.color;
             
+            // Based on the blinkRate property reset the
+            // blink property.
+            
+            if (fly.blinkRate >= fly.maxBlinkRate) {
+                
+                fly.blinkRate = 0;
+                fly.blink = false;
+                
+            } else {
+                
+                fly.blinkRate++;
+                
+                if (fly.blinkRate >= 7) {
+                    
+                    fly.blink = true;
+                }
+                
+            }
+            
             // If the firefly is visible, draw it
             if (fly.blink) {
                 
@@ -121,7 +140,49 @@ function update() {
                 
             }
             
-            ctx.closePath()
+            ctx.closePath();
+            
+            // Animate each Firefly particle object
+            //
+            // Apply a velocity to change the object's 
+            // x and y properties (positions)
+            //
+            
+            fly.x += fly.xVelocity + Math.cos(angleX) * range;
+            fly.y += fly.yVelocity + Math.sin(angleY) * range;
+            
+            // Alter the angle values
+            angleX += xSpeed;
+            angleY += ySpeed;
+            
+            // Collision detcction at our boundaries
+            //
+            // Check bottom edge
+            if (fly.y >= fly.bottom + 25 && fly.yVelocity > 0) {
+                
+                fly.y = fly.bottom + 5;
+                fly.yVelocity *= -1; // reverse direction
+                
+            } else if (fly.y <= fly.top - 25 && fly.yVelocity < 0) { // top edge
+                
+                fly.y = 5;
+                fly.yVelocity *= -1;
+                
+            }
+            
+            
+            // Check right edge
+            if (fly.x >= fly.right + 25 && fly.xVelocity > 0) {
+                
+                fly.x = fly.right + 5;
+                fly.xVelocity *= -1; // reverse direction
+                
+            } else if (fly.x <= fly.left - 25 && fly.xVelocity < 0) { // left edge
+                
+                fly.x = 5;
+                fly.xVelocity *= -1;
+                
+            }
             
         });
         

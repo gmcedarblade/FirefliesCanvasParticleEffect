@@ -67,7 +67,7 @@ function FireFly(topEdge, bottomEdge, leftEdge, rightEdge, xVel, yVel) {
     this.left = leftEdge;
     this.right = rightEdge;
     this.xVelocity = xVel;
-    this.xVelocity = yVel;
+    this.yVelocity = yVel;
     
     // initialposition of this FireFly object
     this.x = Math.random() * canvas.width/2;
@@ -76,7 +76,7 @@ function FireFly(topEdge, bottomEdge, leftEdge, rightEdge, xVel, yVel) {
     this.alpha = randRange(.2, .9);
     this.color = 'rgba(153, 255, 51, ' + this.alpha + ')';
     
-    this.radius = randRange(2.5, 4.5);
+    this.radius = randRange(.5, 1.5);
     
     this.blink = true;
     
@@ -121,7 +121,16 @@ function update() {
                 
             }
             
-            ctx.closePath()
+            ctx.closePath();
+            
+            // Animate each Firefly particle object
+            //
+            // Apply a velocity to change the object's 
+            // x and y properties (positions)
+            //
+            
+            fly.x += fly.xVelocity;
+            fly.y += fly.yVelocity;
             
         });
         

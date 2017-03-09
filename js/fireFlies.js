@@ -151,6 +151,20 @@ function update() {
                 
             }
             
+            
+            // Check right edge
+            if (fly.x >= fly.right + 25 && fly.xVelocity > 0) {
+                
+                fly.x = fly.right + 5;
+                fly.xVelocity *= -1; // reverse direction
+                
+            } else if (fly.x <= fly.left - 25 && fly.xVelocity < 0) { // left edge
+                
+                fly.x = 5;
+                fly.xVelocity *= -1;
+                
+            }
+            
         });
         
         requestAnimationFrame(update);
